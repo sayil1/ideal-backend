@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const contacts = require('../models/eventsModel')
+const Event = require('../models/eventsModel')
 var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -20,7 +20,7 @@ router.post('/newEve', multipartMiddleware, async (req, res) => {
     let x = await cloudinary.v2.uploader.upload(
         req.files.image.path, {
         width: 700,
-   
+
         gravity: "south",
         y: 80,
         color: "white"
@@ -36,7 +36,7 @@ router.post('/newEve', multipartMiddleware, async (req, res) => {
                 data: result.secure_url
             };
             console.log(imagePath);
-            let newEvents = new contacts({
+            let newEvents = new Event({
                 title: req.body.title,
                 description: req.body.description,
                 imagesPath: imagePath.data,
@@ -58,12 +58,50 @@ router.post('/newEve', multipartMiddleware, async (req, res) => {
         });
 })
 router.get('/allEve', (req, res) => {
-    contects.find((err, result) => {
+    Event.find((err, result) => {
         if (err) res.send(err)
         res.send({ result: result })
-        console.log(result)
+        // console.log(result)
     })
 })
 
+router.get("/del/:id", function(req, res, next) {
+    Event.findByIdAndDelete(req.params.id, function(err, output) {
+      if (err) {
+        return next(err);
+      }
+      res.send(output === 1 ? { msg: "success" } : { msg: "error" });
+    });
+  });
+
+
+router.get('/get-event/:id', (req, res) => {
+    Event.find({ _id: req.params.id }, (err, result) => {
+      if (err) {
+        console.log(err)
+      } else {
+        res.json({
+          result
+        })
+      }
+    })
+  })
+
+router.put('/update-event/:_id', (req, res) => {
+    // var newInfo = req.body
+    let newInfo = req.body
+  console.log(req.params._id, "newID")
+    Event.findByIdAndUpdate(req.params._id, newInfo, {upsert: true, new: true}, (err, result) => {
+        if (err) {
+            console.log(err)
+        } else {
+            res.json({
+                message: "Successfully updated",
+                //  authData
+                result
+            })
+        }
+    })
+  })
 
 module.exports = router;

@@ -2,8 +2,8 @@ const express = require('express')
 const app = express()
 var mongoose = require('mongoose');
 var bodyParser = require('body-parser')
-mongoose.connect('mongodb://localhost/ideal', {useNewUrlParser: true});
-// mongoose.connect('mongodb+srv://sayil:sayil2194@cluster0-knm9b.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
+// mongoose.connect('mongodb://localhost/ideal', {useNewUrlParser: true});
+ mongoose.connect('mongodb+srv://admin:sayil2194@cluster0-ueg0l.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 mongoose.connect("mongodb://localhost:27017/ideal");
 var cors = require('cors')
 app.use(cors())
