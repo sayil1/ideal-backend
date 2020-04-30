@@ -15,7 +15,7 @@ router.post('/newProj', (req, res) => {
         phone: req.body.phone,
         interests: req.body.interests
     })
-console.log(req.body)
+    console.log(req.body)
     newProj
         .save()
         .then(proj => {
@@ -58,11 +58,11 @@ console.log(req.body)
 })
 router.get('/allProj', (req, res) => {
     projects.find((err, result) => {
-      if (err) res.send(err)
-      res.send({ result: result })
-      console.log(result)
+        if (err) res.send(err)
+        res.send({ result: result })
+        console.log(result)
     })
-  })
+})
 
 
 module.exports = router;
