@@ -15,14 +15,14 @@ router.post('/newCont', (req, res) => {
         phone: req.body.phone,
         message: req.body.interests
     })
-    console.log(req.body)
     newcont
         .save()
         .then(cont => {
-
+             res.send("your message has been recieved. thanks!")
         })
         .catch(err => {
             console.log(err);
+            res.send("error, please try again!")
         });
 })
 router.get('/allCont', (req, res) => {

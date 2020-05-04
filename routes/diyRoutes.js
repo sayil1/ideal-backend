@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Event = require('../models/eventsModel')
+const Diys = require('../models/diyModel')
 var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -16,12 +16,12 @@ router.get('/', (req, res) => {
     res.send("working")
 })
 
-router.post('/newEve', multipartMiddleware, async (req, res) => {
-    // console.log(req.files.image.path)
+router.post('/newDiy', multipartMiddleware, async (req, res) => {
+     console.log(req.body)
+
     let x = await cloudinary.v2.uploader.upload(
         req.files.image.path, {
         width: 700,
-
         gravity: "south",
         y: 80,
         color: "white"
@@ -30,37 +30,39 @@ router.post('/newEve', multipartMiddleware, async (req, res) => {
             if (error) {
                 console.log("error here")
             }
-           
+           console.log({
+                data: result
+            });
             imagePath = {
                 data: result.secure_url
             };
             console.log(imagePath);
-            let newEvents = new Event({
+            let newDiys = new Diys({
+                imagesPath: imagePath.data,
                 title: req.body.title,
                 description: req.body.description,
                 imagesPath: imagePath.data,
-                location: req.body.location,
-                venue: req.body.venue,
-                startDate: req.body.startDate,
-                endDate: req.body.endDate,
-                time: req.body.time,
+                price: req.body.price,
+                quantity: req.body.quantity,             
             });
-            newEvents.save(function (err, data) {
+            newDiys.save(function (err, data) {
                 // console.log(data + " undefined?");
                 if (err) {
                     console.log(err);
-                    // res.send("error")
+                     res
                 } else {
+                    console.log(data)
                     console.log("Data Saved!");
                     res.send("saved")
                 }
             })
+            console.log(newDiys)
         });
 
   
 })
-router.get('/allEve', (req, res) => {
-    Event.find((err, result) => {
+router.get('/allDiys', (req, res) => {
+    Diys.find((err, result) => {
         if (err) res.send(err)
         res.send({ result: result })
         // console.log(result)
@@ -68,7 +70,7 @@ router.get('/allEve', (req, res) => {
 })
 
 router.get("/del/:id", function(req, res, next) {
-    Event.findByIdAndDelete(req.params.id, function(err, output) {
+    Diys.findByIdAndDelete(req.params.id, function(err, output) {
       if (err) {
         return next(err);
       }
@@ -77,8 +79,8 @@ router.get("/del/:id", function(req, res, next) {
   });
 
 
-router.get('/get-event/:id', (req, res) => {
-    Event.find({ _id: req.params.id }, (err, result) => {
+router.get('/get-diy/:id', (req, res) => {
+    Diys.find({ _id: req.params.id }, (err, result) => {
       if (err) {
         console.log(err)
       } else {
@@ -89,11 +91,11 @@ router.get('/get-event/:id', (req, res) => {
     })
   })
 
-router.put('/update-event/:_id', (req, res) => {
+router.put('/update-diy/:_id', (req, res) => {
     // var newInfo = req.body
     let newInfo = req.body
   console.log(req.params._id, "newID")
-    Event.findByIdAndUpdate(req.params._id, newInfo, {upsert: true, new: true}, (err, result) => {
+    Diys.findByIdAndUpdate(req.params._id, newInfo, {upsert: true, new: true}, (err, result) => {
         if (err) {
             console.log(err)
         } else {

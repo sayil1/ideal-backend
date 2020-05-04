@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const Event = require('../models/eventsModel')
+const Contest = require('../models/contestModel')
 var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -16,8 +16,10 @@ router.get('/', (req, res) => {
     res.send("working")
 })
 
-router.post('/newEve', multipartMiddleware, async (req, res) => {
-    // console.log(req.files.image.path)
+router.post('/newCont', multipartMiddleware, async (req, res) => {
+
+    console.log(req)
+
     let x = await cloudinary.v2.uploader.upload(
         req.files.image.path, {
         width: 700,
@@ -30,12 +32,14 @@ router.post('/newEve', multipartMiddleware, async (req, res) => {
             if (error) {
                 console.log("error here")
             }
-           
+            res.json({
+                data: result
+            });
             imagePath = {
                 data: result.secure_url
             };
             console.log(imagePath);
-            let newEvents = new Event({
+            let newCont = new Contest({
                 title: req.body.title,
                 description: req.body.description,
                 imagesPath: imagePath.data,
@@ -45,22 +49,23 @@ router.post('/newEve', multipartMiddleware, async (req, res) => {
                 endDate: req.body.endDate,
                 time: req.body.time,
             });
-            newEvents.save(function (err, data) {
+            newCont.save(function (err, data) {
                 // console.log(data + " undefined?");
                 if (err) {
                     console.log(err);
-                    // res.send("error")
+                     res
                 } else {
+                    console.log(data)
                     console.log("Data Saved!");
                     res.send("saved")
                 }
             })
         });
 
-  
+    
 })
-router.get('/allEve', (req, res) => {
-    Event.find((err, result) => {
+router.get('/allCont', (req, res) => {
+    Contest.find((err, result) => {
         if (err) res.send(err)
         res.send({ result: result })
         // console.log(result)
@@ -68,7 +73,7 @@ router.get('/allEve', (req, res) => {
 })
 
 router.get("/del/:id", function(req, res, next) {
-    Event.findByIdAndDelete(req.params.id, function(err, output) {
+    Contest.findByIdAndDelete(req.params.id, function(err, output) {
       if (err) {
         return next(err);
       }
@@ -77,8 +82,8 @@ router.get("/del/:id", function(req, res, next) {
   });
 
 
-router.get('/get-event/:id', (req, res) => {
-    Event.find({ _id: req.params.id }, (err, result) => {
+router.get('/get-contest/:id', (req, res) => {
+    Contest.find({ _id: req.params.id }, (err, result) => {
       if (err) {
         console.log(err)
       } else {
@@ -89,11 +94,11 @@ router.get('/get-event/:id', (req, res) => {
     })
   })
 
-router.put('/update-event/:_id', (req, res) => {
+router.put('/update-contest/:_id', (req, res) => {
     // var newInfo = req.body
     let newInfo = req.body
   console.log(req.params._id, "newID")
-    Event.findByIdAndUpdate(req.params._id, newInfo, {upsert: true, new: true}, (err, result) => {
+    Contest.findByIdAndUpdate(req.params._id, newInfo, {upsert: true, new: true}, (err, result) => {
         if (err) {
             console.log(err)
         } else {
