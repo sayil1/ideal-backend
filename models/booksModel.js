@@ -23,6 +23,9 @@ const booksSchema = new schema({
        type:Boolean,
        default: false
     },
+    topTrend: { 
+        type: Date,
+    },
     created_date: {
         type: Date,
         default: Date.now,

@@ -11,7 +11,7 @@ const eventSchema = new schema({
     imagesPath: {
         type: String
     },
-  
+
     location: {
         type: String
     },
@@ -27,6 +27,8 @@ const eventSchema = new schema({
     time: {
         type: String
     },
+    
+
     created_date: {
         type: Date,
         default: Date.now,
