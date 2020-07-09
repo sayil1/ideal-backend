@@ -5,7 +5,7 @@ const WebinarSchema = new schema({
         type: String
     },
 
-    shortDescription: {
+    description: {
         type: String
     },
     imagesPath: {

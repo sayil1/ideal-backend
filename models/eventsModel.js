@@ -4,7 +4,6 @@ const eventSchema = new schema({
     title: {
         type: String
     },
-
     shortDescription: {
         type: String
     },

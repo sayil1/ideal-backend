@@ -4,12 +4,15 @@ const booksSchema = new schema({
     title: {
         type: String
     },
-    Description: {
+    author:{
+          type:String
+    },
+    description: {
         type: String
     },
-    // category: {
-    //     type: String
-    // },
+    category: {
+        type: String
+    },
     imagesPath: {
         type: String
     },
