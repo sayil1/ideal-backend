@@ -49,5 +49,7 @@ app.use("/web", require('./routes/webinarRoutes'))
 app.use("/contest", require('./routes/contestRoutes'))
 app.use("/contest", require('./routes/contestRoutes'))
 app.use("/user", require('./routes/userRoutes.js'))
+app.use("/toefl", require('./routes/toeflRoutes'))
+app.use("/pearson", require('./routes/pearsonROutes'))
 
 app.listen(process.env.PORT || port, () => console.log(`Example app listening on port ${port}!`))
