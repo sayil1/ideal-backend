@@ -4,7 +4,7 @@ const eventSchema = new schema({
     title: {
         type: String
     },
-    shortDescription: {
+description: {
         type: String
     },
     imagesPath: {
@@ -14,12 +14,20 @@ const eventSchema = new schema({
     location: {
         type: String
     },
-    exactVenue: {
+    venue: {
         type: String
     },
     startDate: {
         type: String
     },
+    participant:[
+        {
+            fname:"",
+            lname:"",
+            email:"",
+            phone:""
+        }
+    ],
     endDate: {
         type: String
     },

@@ -1,5 +1,5 @@
 const router = require("express").Router();
-const pearson = require('../models/toefModel')
+const pearson = require('../models/pearsonModel')
 var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();

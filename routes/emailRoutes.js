@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const email = require('../models/emailModel');
 var nodemailer = require('nodemailer');
+let HTML = require('./eventsEmail')
 
 router.get('/', (req, res) => {
     res.send('flying')

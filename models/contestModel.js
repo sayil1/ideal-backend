@@ -27,6 +27,14 @@ const contestSchema = new schema({
     time: {
         type: String
     },
+    participant:[
+        {
+            fname:"",
+            lname:"",
+            email:"",
+            phone:""
+        }
+    ],
     created_date: {
         type: Date,
         default: Date.now,

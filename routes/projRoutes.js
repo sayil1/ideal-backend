@@ -16,40 +16,41 @@ router.post('/newProj', (req, res) => {
         interests: req.body.interests
     })
     console.log(req.body)
-    newProj
-        .save()
-        .then(proj => {
-            var transporter = nodemailer.createTransport({
-                service: 'gmail',
-                auth: {
-                    user: 'sundaysayil4u@gmail.com',
-                    pass: 'sayil2194'
-                }
-            });
+    res.send("success")
+    // newProj
+    //     .save()
+    //     .then(proj => {
+    //         var transporter = nodemailer.createTransport({
+    //             service: 'gmail',
+    //             auth: {
+    //                 user: 'sundaysayil4u@gmail.com',
+    //                 pass: 'sayil2194'
+    //             }
+    //         });
 
-            var mailOptions = {
-                from: req.body.email,
-                to: 'sundaysayil4u@gmail.com',
-                subject: 'Sending Email using Node.js',
-                html: `<h1>Project Support Interest Indicated </h1> <br><p> from ${req.body.lname} ${req.body.fname}</p> <br>
-            <p>in the following projects: ${req.body.interests}</p><br>
-            phone:${req.body.phone}`
-            };
+    //         var mailOptions = {
+    //             from: req.body.email,
+    //             to: 'sundaysayil4u@gmail.com',
+    //             subject: 'Sending Email using Node.js',
+    //             html: `<h1>Project Support Interest Indicated </h1> <br><p> from ${req.body.lname} ${req.body.fname}</p> <br>
+    //         <p>in the following projects: ${req.body.interests}</p><br>
+    //         phone:${req.body.phone}`
+    //         };
 
-            transporter.sendMail(mailOptions, function (error, info) {
-                if (error) {
-                    console.log(error);
-                    res.send(error)
-                } else {
-                    console.log('Email sent: ' + info.response);
-                    res.send('Email sent, Thank You!! ');
-                }
-            });;
-            console.log("success")
-        })
-        .catch(err => {
-            console.log(err);
-        });
+    //         transporter.sendMail(mailOptions, function (error, info) {
+    //             if (error) {
+    //                 console.log(error);
+    //                 res.send(error)
+    //             } else {
+    //                 console.log('Email sent: ' + info.response);
+    //                 res.send('Email sent, Thank You!! ');
+    //             }
+    //         });;
+    //         console.log("success")
+        // })
+        // .catch(err => {
+        //     console.log(err);
+        // });
 
     // Instantiate the SMTP server
 

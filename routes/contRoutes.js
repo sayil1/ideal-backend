@@ -15,10 +15,13 @@ router.post('/newCont', (req, res) => {
         phone: req.body.phone,
         message: req.body.interests
     })
+
+    // res.send("successfully registered")
+    console.log("seene")
     newcont
         .save()
         .then(cont => {
-             res.send("your message has been recieved. thanks!")
+             res.send("successfully sent")
         })
         .catch(err => {
             console.log(err);

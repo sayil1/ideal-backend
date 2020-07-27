@@ -4,6 +4,8 @@ var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 const cloudinary = require('cloudinary');
+var nodemailer = require('nodemailer');
+let HTML = require('./mediaEmail')
 cloudinary.config({
   cloud_name: 'sayil',
   api_key: '443611676341187',
@@ -109,19 +111,93 @@ router.get('/get-event/:id', (req, res) => {
 
 router.put('/update-event/:_id', (req, res) => {
   // var newInfo = req.body
-  let newInfo = req.body
-  console.log(req.params._id, "newID")
-  Event.findByIdAndUpdate(req.params._id, newInfo, { upsert: true, new: true }, (err, result) => {
-    if (err) {
-      console.log(err)
-    } else {
-      res.json({
-        message: "updated",
-        //  authData
-        result
-      })
+  // let newInfo = req.body
+  let newEvents = new Event({
+    participant: [{
+      fname: req.body.fname,
+      lname: req.body.lname,
+      email: req.body.email,
+      phone: req.body.phone
+    }]
+  });
+  // console.log(newInfo)
+  Event.findByIdAndUpdate(req.params._id,
+    { $push: { participant: newEvents.participant } },
+    function (err, doc) {
+      if (err) {
+        console.log(err);
+      } else {
+
+
+        Event.find({ _id: req.params._id }, (err, result) => {
+          if (err) {
+            console.log(err)
+          } else {
+            // res.json({
+            //   result: result
+            // })
+            var tt = new HTML.A(req.body.fname, req.body.lname, result.imagesPath, result[0].location, result[0].title, result[0]._id, result[0].startDate, result[0].time, result[0].venue, result[0].description)
+            var transporter = nodemailer.createTransport({
+              service: 'gmail',
+              auth: {
+                user: 'sundaysayil4u@gmail.com',
+                pass: 'seyilnen2194'
+              }
+            });
+
+            var mailOptions = {
+              from: 'sundaysayil4u@gmail.com',
+              to: req.body.email,
+              subject: 'IDEal IT Events',
+              html: tt.getMail()
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+              if (error) {
+                console.log(error);
+                res.send(error)
+              } else {
+                console.log('Email sent: ' + info.response);
+                res.send('Check your email, Your Ticket ID has been sent. Thank You!! ');
+              }
+            });;
+          }
+        })
+
+
+
+        // var tt = new HTML.A(req.body.fname, req.body.lname, )
+        // var transporter = nodemailer.createTransport({
+        //               service: 'gmail',
+        //               auth: {
+        //                   user: 'sundaysayil4u@gmail.com',
+        //                   pass: 'seyilnen2194'
+        //               }
+        //           });
+
+        //           var mailOptions = {
+        //               from: 'sundaysayil4u@gmail.com',
+        //               to: req.body.email,
+        //               subject: 'Sending Email using Node.js',
+        //               html: tt.getMail()
+        //           };
+
+        //           transporter.sendMail(mailOptions, function (error, info) {
+        //               if (error) {
+        //                   console.log(error);
+        //                   res.send(error)
+        //               } else {
+        //                   console.log('Email sent: ' + info.response);
+        //                   res.send('Check your email, Your Ticket ID has been sent. Thank You!! ');
+        //               }
+        //           });;
+        console.log(newEvents)
+        // res.status(200).send({
+        //   message: "added successful"
+        // })
+      }
     }
-  })
+  );
 })
 
 module.exports = router;
