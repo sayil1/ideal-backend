@@ -1,44 +1,52 @@
 const router = require("express").Router();
-const email = require('../models/emailModel');
+const email = require('../models/emailUpdatesModel');
 var nodemailer = require('nodemailer');
-let HTML = require('./eventsEmail')
+let HTML = require('./mediaEmail')
 
 router.get('/', (req, res) => {
     res.send('flying')
 })
 
 router.post('/subscribe', (req, res) => {
-    let Email = new Email({
+    let newmail = new email({
         email: req.body.email,
         zipCode: req.body.zipCode,
         country:req.body.country
     })
 
-    email.save().then(
-        res.send("Successful")
+    newmail.save().then(
+        res.send("Saved Successfully ")
     )
 })
 
 router.post('/sendMessage', (req, res) => {
-    let Msg = new Email({
+    let emailList
+    let Msg = new email({
         message: req.body.message,
        
     })
+    email.find((err, result) => {
+        if (err) {
+            res.send(err)
+        } else{
+            // res.send({ result})
+            for (n in result){
+                // this.emailList+=`,"${result[n].email}"`
 
-  
+                console.log(result)
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
                 user: 'sundaysayil4u@gmail.com',
-                pass: 'sayil2194'
+                pass: 'seyilnen2194'
             }
         });
 
         var mailOptions = {
             from: req.body.email,
-            to: 'sundaysayil4u@gmail.com',
-            subject: 'Sending Email using Node.js',
-            html: `<h1>hi Sayil </h1> <br><p>  ${req.body.message} </p> <br>`
+            to: result[n].email,
+            subject: '',
+            html: `  ${req.body.message} `
         };
 
         transporter.sendMail(mailOptions, function (error, info) {
@@ -50,7 +58,17 @@ router.post('/sendMessage', (req, res) => {
                 res.send('Email sent, Thank You!! ');
             }
         });;
+            }
+          
+        
         console.log("success")
+        }
+     
+
+
+    })
+  
+       
     })
 
 

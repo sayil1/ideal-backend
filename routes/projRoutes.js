@@ -1,4 +1,6 @@
 const router = require("express").Router();
+var nodemailer = require('nodemailer');
+let HTML = require("./adminMail")
 const projects = require('../models/projectsModel')
 var nodemailer = require('nodemailer');
 
@@ -13,49 +15,51 @@ router.post('/newProj', (req, res) => {
         lname: req.body.lname,
         email: req.body.email,
         phone: req.body.phone,
-        interests: req.body.interests
+        interests: req.body.Interests
     })
-    console.log(req.body)
-    res.send("success")
-    // newProj
-    //     .save()
-    //     .then(proj => {
-    //         var transporter = nodemailer.createTransport({
-    //             service: 'gmail',
-    //             auth: {
-    //                 user: 'sundaysayil4u@gmail.com',
-    //                 pass: 'sayil2194'
-    //             }
-    //         });
+    console.log(req.body.Interests)
+    // res.send("success")
+    newProj
+        .save()
+        .then(proj => {
 
-    //         var mailOptions = {
-    //             from: req.body.email,
-    //             to: 'sundaysayil4u@gmail.com',
-    //             subject: 'Sending Email using Node.js',
-    //             html: `<h1>Project Support Interest Indicated </h1> <br><p> from ${req.body.lname} ${req.body.fname}</p> <br>
-    //         <p>in the following projects: ${req.body.interests}</p><br>
-    //         phone:${req.body.phone}`
-    //         };
+            var statusMessage = `A message from the Surport projects page with the following interest(s) indicated:<br> ${req.body.Interests}`
+            var mail = new HTML.AdminMail(req.body.fname, req.body.lname, req.body.email, req.body.message, req.body.phone, statusMessage, )
 
-    //         transporter.sendMail(mailOptions, function (error, info) {
-    //             if (error) {
-    //                 console.log(error);
-    //                 res.send(error)
-    //             } else {
-    //                 console.log('Email sent: ' + info.response);
-    //                 res.send('Email sent, Thank You!! ');
-    //             }
-    //         });;
-    //         console.log("success")
-        // })
-        // .catch(err => {
-        //     console.log(err);
-        // });
+            var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                    user: 'sundaysayil4u@gmail.com',
+                    pass: 'seyilnen2194'
+                }
+            });
+
+            var mailOptions = {
+                from: req.body.email,
+                to: 'sundaysayil4u@gmail.com',
+                subject: '',
+                html: mail.getMail()
+            };
+
+            transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                    console.log(error);
+                    res.send(error)
+                } else {
+                    console.log('Email sent: ' + info.response);
+                    res.send('Email sent, Thank You!! ');
+                }
+            });;
+            console.log("success")
+        })
+        .catch(err => {
+            console.log(err);
+        });
 
     // Instantiate the SMTP server
 
 
-    res.send(newProj)
+    // res.send(newProj)
 })
 router.get('/allProj', (req, res) => {
     projects.find((err, result) => {

@@ -14,9 +14,9 @@ const projSchema = new schema({
       phone:{
           type: String
       },
-      interests:{
-          type: String
-      },
+      interests:[
+          ""
+      ],
       created_date :{
           type: Date,
           default: Date.now,

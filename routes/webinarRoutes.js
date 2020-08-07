@@ -92,19 +92,61 @@ router.get('/get-webinar/:id', (req, res) => {
 
 router.put('/update-webinar/:_id', (req, res) => {
     // var newInfo = req.body
-    let newInfo = req.body
-  console.log(req.params._id, "newID")
-    Event.findByIdAndUpdate(req.params._id, newInfo, {upsert: true, new: true}, (err, result) => {
+    let newParticipants = new Contest({
+      participant: [{
+        fname: req.body.fname,
+        lname: req.body.lname,
+        email: req.body.email,
+        phone: req.body.phone
+      }]
+    });
+    Contest.findByIdAndUpdate(req.params._id,
+      { $push: { participant: newParticipants.participant } },
+      function (err, doc) {
         if (err) {
-            console.log(err)
+          console.log(err);
         } else {
-            res.json({
-                message: "updated",
-                //  authData
-                result
-            })
+  
+  
+          Contest.find({ _id: req.params._id }, (err, result) => {
+            if (err) {
+              console.log(err)
+            } else {
+              var tt = new HTML.A(req.body.fname, req.body.lname, result.imagesPath, result[0].location, result[0].title, result[0]._id, result[0].startDate, result[0].time, result[0].venue, result[0].description)
+              var transporter = nodemailer.createTransport({
+                service: 'gmail',
+                auth: {
+                  user: 'sundaysayil4u@gmail.com',
+                  pass: 'seyilnen2194'
+                }
+              });
+  
+              var mailOptions = {
+                from: 'sundaysayil4u@gmail.com',
+                to: req.body.email,
+                subject: 'IDEal IT Webinars',
+                html: tt.getMail()
+              };
+  
+              transporter.sendMail(mailOptions, function (error, info) {
+                if (error) {
+                  console.log(error);
+                  res.send(error)
+                } else {
+                  console.log('Email sent: ' + info.response);
+                  res.send('Check your email, Your Ticket ID has been sent. Thank You!! ');
+                }
+              });;
+            }
+          })
+  
+  
+  
         }
-    })
-  })
+      }
+    );
+  }
+  
+  )
 
 module.exports = router;
