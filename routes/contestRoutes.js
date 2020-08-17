@@ -54,11 +54,11 @@ router.post('/newCont', multipartMiddleware, async (req, res) => {
         // console.log(data + " undefined?");
         if (err) {
           console.log(err);
-          res
+          
         } else {
           // console.log(data)
           // console.log("Data Saved!");
-          res.send("saved")
+          // res.send("saved")
         }
       })
     });

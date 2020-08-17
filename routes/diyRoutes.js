@@ -72,7 +72,9 @@ router.get('/allDiys', (req, res) => {
 router.get("/del/:id", function(req, res, next) {
     Diys.findByIdAndDelete(req.params.id, function(err, output) {
       if (err) {
+      
         return next(err);
+      
       }
       res.send(output === 1 ? { msg: "success" } : { msg: "error" });
     });

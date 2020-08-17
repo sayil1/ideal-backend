@@ -56,16 +56,15 @@ router.post('/newBook', multipartMiddleware, async (req, res) => {
       newBooks.save(function (err, data) {
         // console.log(data + " undefined?");
         if (err) {
-          consol
-          e.log(err);
-          res
+          console.log(err);
+          res.send("eroor here")
         } else {
           console.log(data)
           console.log("Data Saved!");
           res.send("saved")
         }
       })
-      console.log(newBooks)
+      console.log(req)
     });
 
 
