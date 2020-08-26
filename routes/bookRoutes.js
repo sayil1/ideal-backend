@@ -29,7 +29,7 @@ router.post('/newBook', multipartMiddleware, async (req, res) => {
   },
     function (error, result) {
       if (error) {
-       res.send("Network Error")
+        res.send("Network Error")
       }
       console.log({
         data: result
@@ -45,6 +45,7 @@ router.post('/newBook', multipartMiddleware, async (req, res) => {
       console.log(imagePath);
       let newBooks = new Books({
         imagesPath: imagePath.data,
+        category: req.body.category,
         title: req.body.title,
         description: req.body.description,
         imagesPath: imagePath.data,
@@ -69,13 +70,53 @@ router.post('/newBook', multipartMiddleware, async (req, res) => {
 
 
 })
-router.get('/allBooks', (req, res) => {
-  Books.find((err, result) => {
+router.get('/allBooks/:fil', (req, res) => {
+
+  if (!req.params.fil) {
+    let filter = "."
+    Books.find({
+      $or: [{ title: new RegExp(filter + "?", 'i', "g") }, { category: new RegExp(filter + "?", 'i', "g") },]
+    }, (err, result) => {
+      if (err) res.send(err)
+      res.send({ result: result })
+      // console.log(result)
+    })
+  }
+  else {
+    let filter = req.params.fil
+    Books.find({
+      $or: [{ title: new RegExp(filter + "?", 'i', "g") }, { category: new RegExp(filter + "?", 'i', "g") },]
+
+
+
+    }, (err, result) => {
+      if (err) res.send(err)
+      res.send({ result: result })
+      // console.log(result)
+    })
+  }
+
+
+})
+
+router.get('/allBooks/', (req, res) => {
+  Books.find({}, (err, result) => {
     if (err) res.send(err)
     res.send({ result: result })
     // console.log(result)
   })
 })
+
+router.get('/allBookscat/:cat', (req, res) => {
+  let filter = req.params.cat
+  Books.find({ category: new RegExp(filter + "?", 'i', "g") }, (err, result) => {
+    if (err) res.send(err)
+    res.send({ result: result })
+    // console.log(result)
+  })
+})
+
+
 
 router.get("/del/:id", function (req, res, next) {
   Books.findByIdAndDelete(req.params.id, function (err, output) {
