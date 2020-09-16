@@ -4,7 +4,7 @@ var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 const cloudinary = require('cloudinary');
-let HTML = require('./mediaEmail')
+let HTML = require('./mailTemplates/mediaEmail')
 cloudinary.config({
   cloud_name: 'sayil',
   api_key: '443611676341187',

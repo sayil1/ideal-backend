@@ -1,5 +1,6 @@
 const router = require("express").Router();
 const toefl = require('../models/toefModel')
+let HTML = require("./mailTemplates/examMail")
 var nodemailer = require('nodemailer');
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
@@ -48,6 +49,7 @@ router.post('/newToefl', multipartMiddleware, async (req, res) => {
         sname: req.body.sname,
         fname: req.body.fname,
         mname: req.body.fname,
+        email:req.body.email,
         date: req.body.date,
         contAdress:req.body.contAdress,
         country:req.body.country,
@@ -65,6 +67,35 @@ router.post('/newToefl', multipartMiddleware, async (req, res) => {
           console.log(data)
           console.log("Data Saved!");
           res.send("saved")
+
+
+          var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+                user: 'sundaysayil4u@gmail.com',
+                pass: 'seyilnen2194'
+            }
+        });
+        let ExamType = "TOEFL"
+        var tt = new HTML.ExamMail(req.body.sname, req.body.fname, req.body.mname, imagePath.data, req.body.email ,req.body.contAdress,req.body.country, req.body.examCenter,req.body.examDate,  ExamType)
+        var mailOptions = {
+            from: req.body.Email,
+            to: "sundaysayil4u@gmail.com",
+            subject: 'IDeal-IT | Toefl Registrations',
+            html: tt.getMail()
+        };
+
+        transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+                console.log(error);
+                res.send(error)
+            } else {
+                console.log('Email sent: ' + info.response);
+                res.send('Email sent, Thank You!! ');
+            }
+        });;
+
+          
         }
       })
       console.log(newtoefl)

@@ -5,7 +5,7 @@ var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 const cloudinary = require('cloudinary');
 var nodemailer = require('nodemailer');
-let HTML = require('./mediaEmail')
+let HTML = require('./mailTemplates/mediaEmail')
 cloudinary.config({
   cloud_name: 'sayil',
   api_key: '443611676341187',
@@ -136,7 +136,7 @@ router.put('/update-event/:_id', (req, res) => {
             // res.json({
             //   result: result
             // })
-            var tt = new HTML.A(req.body.fname, req.body.lname, result.imagesPath, result[0].location, result[0].title, result[0]._id, result[0].startDate, result[0].time, result[0].venue, result[0].description)
+            var tt = new HTML.A(req.body.fname, req.body.lname, result[0].imagesPath, result[0].location, result[0].title, result[0]._id, result[0].startDate, result[0].time, result[0].venue, result[0].description)
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {

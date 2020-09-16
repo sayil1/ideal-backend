@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const pearson = require('../models/pearsonModel')
 var nodemailer = require('nodemailer');
+let HTML = require("./mailTemplates/examMail")
 var multipart = require('connect-multiparty');
 var multipartMiddleware = multipart();
 const cloudinary = require('cloudinary');
@@ -29,7 +30,7 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
   },
     function (error, result) {
       if (error) {
-       res.send("Network Error")
+        res.send("Network Error")
       }
       console.log({
         data: result
@@ -38,9 +39,9 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
         data: result.secure_url
       };
 
-    //   var now = new Date();
-    //   var expiresIn = new Date(now);
-    //   expiresIn.setDate(expiresIn.getDate() + 7);
+      //   var now = new Date();
+      //   var expiresIn = new Date(now);
+      //   expiresIn.setDate(expiresIn.getDate() + 7);
 
       console.log(imagePath);
       let newpearson = new pearson({
@@ -48,11 +49,12 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
         sname: req.body.sname,
         fname: req.body.fname,
         mname: req.body.fname,
+        email:req.body.email,
         date: req.body.date,
-        contAdress:req.body.contAdress,
-        country:req.body.country,
-        examDate:req.body.examDate,
-        examCenter:req.body.examCenter,
+        contAdress: req.body.contAdress,
+        country: req.body.country,
+        examDate: req.body.examDate,
+        examCenter: req.body.examCenter,
       });
 
       newpearson.save(function (err, data) {
@@ -64,6 +66,35 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
           console.log(data)
           console.log("Data Saved!");
           res.send("saved")
+
+
+          var transporter = nodemailer.createTransport({
+            service: 'gmail',
+            auth: {
+              user: 'sundaysayil4u@gmail.com',
+              pass: 'seyilnen2194'
+            }
+          });
+          let ExamType = "PEARSON"
+          var tt = new HTML.ExamMail(req.body.sname, req.body.fname, req.body.mname, imagePath.data, req.body.email, req.body.contAdress, req.body.country, req.body.examCenter, req.body.examDate, ExamType)
+          var mailOptions = {
+            from: req.body.Email,
+            to: "sundaysayil4u@gmail.com",
+            subject: 'IDeal-IT | Pearson Registrations',
+            html: tt.getMail()
+          };
+
+          transporter.sendMail(mailOptions, function (error, info) {
+            if (error) {
+              console.log(error);
+              res.send(error)
+            } else {
+              console.log('Email sent: ' + info.response);
+              res.send('Email sent, Thank You!! ');
+            }
+          });;
+
+
         }
       })
       console.log(newpearson)

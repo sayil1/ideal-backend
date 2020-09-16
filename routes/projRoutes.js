@@ -1,6 +1,6 @@
 const router = require("express").Router();
 var nodemailer = require('nodemailer');
-let HTML = require("./adminMail")
+let HTML = require("./mailTemplates/adminMail")
 const projects = require('../models/projectsModel')
 var nodemailer = require('nodemailer');
 
@@ -37,7 +37,7 @@ router.post('/newProj', (req, res) => {
             var mailOptions = {
                 from: req.body.email,
                 to: 'sundaysayil4u@gmail.com',
-                subject: '',
+                subject: 'IDeal IT Projects',
                 html: mail.getMail()
             };
 

@@ -1,7 +1,7 @@
 const router = require("express").Router();
 const contacts = require('../models/contactModel')
 var nodemailer = require('nodemailer');
-let HTML = require("./adminMail")
+let HTML = require("./mailTemplates/adminMail")
 
 router.get('/', (req, res) => {
     console.log("signup works");
@@ -43,7 +43,7 @@ router.post('/newCont', (req, res) => {
             var mailOptions = {
               from: req.body.email,
               to: 'sundaysayil4u@gmail.com',
-              subject: 'IDEal IT Events',
+              subject: 'IDEal IT Contacts',
               html: mail.getMail()
             };
 

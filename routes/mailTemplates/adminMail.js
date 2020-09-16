@@ -115,10 +115,8 @@ class AdminMail {
                         <td class="wrapper" style="font-family: sans-serif; font-size: 14px; vertical-align: top; box-sizing: border-box; padding: 20px;" valign="top">
                           <table role="presentation" border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
                             <tr>
-                              <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">
-                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">   </p>
-                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
-                                
+                              <td style="font-family: sans-serif; font-size: 24px; vertical-align: top;" valign="top">
+                               
                                 ${this.statusMessage}
                                 </p>
                                 <table role="presentation" border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;" width="100%">
@@ -138,7 +136,7 @@ class AdminMail {
                                     </tr>
                                   </tbody>
                                 </table>
-                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">
+                                <p style="font-family: sans-serif; font-size: 24px; font-weight: normal; margin: 0; margin-bottom: 15px;">
                                 Name: ${this.fname} ${this.lname} <br>
                                 phone: ${this.phone} <br>
                                 email: ${this.email}  <br>
@@ -146,7 +144,7 @@ class AdminMail {
 
 
                                 .</p>
-                                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px;">Good luck! Hope it works.</p>
+                               
                               </td>
                             </tr>
                           </table>
@@ -165,6 +163,8 @@ class AdminMail {
                 <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">&nbsp;</td>
               </tr>
             </table>
+            <img src="https://res.cloudinary.com/sayil/image/upload/v1600166608/Logo.jpg"
+            height="120px" alt="">
           </body>
         </html>
         ©IDEal-IT Asaba, Inc.`
