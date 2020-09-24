@@ -494,7 +494,7 @@ class A {
                         padding-right: 20px;
                         text-align: left;
                     }
-        
+                    gmail
                 }
             </style>
         
@@ -557,7 +557,7 @@ class A {
                         </tr>
                     </table>
                     <img src="https://res.cloudinary.com/sayil/image/upload/v1600166608/Logo.jpg"
-                    height="120px" alt="">
+                    height="10px"  alt="">
                 </div>
             </center>
         </body>

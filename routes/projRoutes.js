@@ -29,14 +29,14 @@ router.post('/newProj', (req, res) => {
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
                 auth: {
-                    user: 'sundaysayil4u@gmail.com',
-                    pass: 'seyilnen2194'
+                    user: 'idealcenter.ng@gmail.com',
+                    pass: 'Ideal@7480!'
                 }
             });
 
             var mailOptions = {
                 from: req.body.email,
-                to: 'sundaysayil4u@gmail.com',
+                to: 'idealcenter.ng@gmail.com',
                 subject: 'IDeal IT Projects',
                 html: mail.getMail()
             };

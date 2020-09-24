@@ -47,15 +47,15 @@ router.post('/sendMessage', (req, res) => {
                 var transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
-                        user: 'sundaysayil4u@gmail.com',
-                        pass: 'seyilnen2194'
+                        user: 'idealcenter.ng@gmail.com',
+                        pass: 'Ideal@7480!'
                     }
                 });
 
                 var mailOptions = {
-                    from: req.body.Email,
+                    from: 'idealcenter.ng@gmail.com',
                     to: result[n].Email,
-                    subject: '',
+                    subject: 'UPDATES - IDEAL IT CENTER',
                     html: `${req.body.message}`
                 };
 

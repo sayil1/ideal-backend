@@ -29,14 +29,14 @@ router.post('/addReg', (req, res) => {
         var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-                user: 'sundaysayil4u@gmail.com',
-                pass: 'sayil2194'
+                user: 'idealcenter.ng@gmail.com',
+                pass: 'Ideal@7480!'
             }
         });
 
         var mailOptions = {
             from: req.body.email,
-            to: 'sundaysayil4u@gmail.com',
+            to: 'idealcenter.ng@gmail.com',
             subject: 'Sending Email using Node.js',
             html: `<h1>Project Support Interest Indicated </h1> <br><p> from ${req.body.lname} ${req.body.fname}</p> <br>
         <p>in the following projects: ${req.body.interests}</p><br>

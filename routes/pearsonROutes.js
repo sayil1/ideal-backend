@@ -71,15 +71,15 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
           var transporter = nodemailer.createTransport({
             service: 'gmail',
             auth: {
-              user: 'sundaysayil4u@gmail.com',
-              pass: 'seyilnen2194'
+              user: 'idealcenter.ng@gmail.com',
+              pass: 'Ideal@7480!'
             }
           });
           let ExamType = "PEARSON"
           var tt = new HTML.ExamMail(req.body.sname, req.body.fname, req.body.mname, imagePath.data, req.body.email, req.body.contAdress, req.body.country, req.body.examCenter, req.body.examDate, ExamType)
           var mailOptions = {
             from: req.body.Email,
-            to: "sundaysayil4u@gmail.com",
+            to: 'idealcenter.ng@gmail.com',
             subject: 'IDeal-IT | Pearson Registrations',
             html: tt.getMail()
           };

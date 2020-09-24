@@ -122,13 +122,13 @@ router.put('/update-contest/:_id', (req, res) => {
             var transporter = nodemailer.createTransport({
               service: 'gmail',
               auth: {
-                user: 'sundaysayil4u@gmail.com',
-                pass: 'seyilnen2194'
+                user: 'idealcenter.ng@gmail.com',
+                pass: 'Ideal@7480!'
               }
             });
 
             var mailOptions = {
-              from: 'sundaysayil4u@gmail.com',
+              from: 'idealcenter.ng@gmail.com',
               to: req.body.email,
               subject: 'IDEal IT Contests',
               html: tt.getMail()
