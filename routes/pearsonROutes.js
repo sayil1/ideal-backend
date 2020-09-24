@@ -49,7 +49,7 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
         sname: req.body.sname,
         fname: req.body.fname,
         mname: req.body.fname,
-        email:req.body.email,
+        email: req.body.email,
         date: req.body.date,
         contAdress: req.body.contAdress,
         country: req.body.country,
@@ -70,6 +70,10 @@ router.post('/newpearson', multipartMiddleware, async (req, res) => {
 
           var transporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            ignoreTLS: false,
+            secure: false,
             auth: {
               user: 'idealcenter.ng@gmail.com',
               pass: 'Ideal@7480!'

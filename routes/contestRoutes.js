@@ -54,7 +54,7 @@ router.post('/newCont', multipartMiddleware, async (req, res) => {
         // console.log(data + " undefined?");
         if (err) {
           console.log(err);
-          
+
         } else {
           // console.log(data)
           // console.log("Data Saved!");
@@ -121,6 +121,10 @@ router.put('/update-contest/:_id', (req, res) => {
             var tt = new HTML.A(req.body.fname, req.body.lname, result.imagesPath, result[0].location, result[0].title, result[0]._id, result[0].startDate, result[0].time, result[0].venue, result[0].description)
             var transporter = nodemailer.createTransport({
               service: 'gmail',
+              host: 'smtp.gmail.com',
+              port: 587,
+              ignoreTLS: false,
+              secure: false,
               auth: {
                 user: 'idealcenter.ng@gmail.com',
                 pass: 'Ideal@7480!'

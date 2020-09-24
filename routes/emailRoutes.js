@@ -46,6 +46,10 @@ router.post('/sendMessage', (req, res) => {
                 console.log(result)
                 var transporter = nodemailer.createTransport({
                     service: 'gmail',
+                    host: 'smtp.gmail.com',
+                    port: 587,
+                    ignoreTLS: false,
+                    secure: false,
                     auth: {
                         user: 'idealcenter.ng@gmail.com',
                         pass: 'Ideal@7480!'

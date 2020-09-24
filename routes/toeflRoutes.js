@@ -30,7 +30,7 @@ router.post('/newToefl', multipartMiddleware, async (req, res) => {
   },
     function (error, result) {
       if (error) {
-       res.send("Network Error")
+        res.send("Network Error")
       }
       console.log({
         data: result
@@ -39,9 +39,9 @@ router.post('/newToefl', multipartMiddleware, async (req, res) => {
         data: result.secure_url
       };
 
-    //   var now = new Date();
-    //   var expiresIn = new Date(now);
-    //   expiresIn.setDate(expiresIn.getDate() + 7);
+      //   var now = new Date();
+      //   var expiresIn = new Date(now);
+      //   expiresIn.setDate(expiresIn.getDate() + 7);
 
       console.log(imagePath);
       let newtoefl = new toefl({
@@ -49,13 +49,13 @@ router.post('/newToefl', multipartMiddleware, async (req, res) => {
         sname: req.body.sname,
         fname: req.body.fname,
         mname: req.body.fname,
-        email:req.body.email,
+        email: req.body.email,
         date: req.body.date,
-        contAdress:req.body.contAdress,
-        country:req.body.country,
-        examDate:req.body.examDate,
-        examCenter:req.body.examCenter,
-       
+        contAdress: req.body.contAdress,
+        country: req.body.country,
+        examDate: req.body.examDate,
+        examCenter: req.body.examCenter,
+
       });
 
       newtoefl.save(function (err, data) {
@@ -71,31 +71,35 @@ router.post('/newToefl', multipartMiddleware, async (req, res) => {
 
           var transporter = nodemailer.createTransport({
             service: 'gmail',
+            host: 'smtp.gmail.com',
+            port: 587,
+            ignoreTLS: false,
+            secure: false,
             auth: {
               user: 'idealcenter.ng@gmail.com',
               pass: 'Ideal@7480!'
             }
-        });
-        let ExamType = "TOEFL"
-        var tt = new HTML.ExamMail(req.body.sname, req.body.fname, req.body.mname, imagePath.data, req.body.email ,req.body.contAdress,req.body.country, req.body.examCenter,req.body.examDate,  ExamType)
-        var mailOptions = {
+          });
+          let ExamType = "TOEFL"
+          var tt = new HTML.ExamMail(req.body.sname, req.body.fname, req.body.mname, imagePath.data, req.body.email, req.body.contAdress, req.body.country, req.body.examCenter, req.body.examDate, ExamType)
+          var mailOptions = {
             from: req.body.Email,
             to: 'idealcenter.ng@gmail.com',
             subject: 'IDeal-IT | Toefl Registrations',
             html: tt.getMail()
-        };
+          };
 
-        transporter.sendMail(mailOptions, function (error, info) {
+          transporter.sendMail(mailOptions, function (error, info) {
             if (error) {
-                console.log(error);
-                res.send(error)
+              console.log(error);
+              res.send(error)
             } else {
-                console.log('Email sent: ' + info.response);
-                res.send('Email sent, Thank You!! ');
+              console.log('Email sent: ' + info.response);
+              res.send('Email sent, Thank You!! ');
             }
-        });;
+          });;
 
-          
+
         }
       })
       console.log(newtoefl)

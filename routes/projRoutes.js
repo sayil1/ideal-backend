@@ -24,10 +24,14 @@ router.post('/newProj', (req, res) => {
         .then(proj => {
 
             var statusMessage = `A message from the Surport projects page with the following interest(s) indicated:<br> ${req.body.Interests}`
-            var mail = new HTML.AdminMail(req.body.fname, req.body.lname, req.body.email, req.body.message, req.body.phone, statusMessage, )
+            var mail = new HTML.AdminMail(req.body.fname, req.body.lname, req.body.email, req.body.message, req.body.phone, statusMessage,)
 
             var transporter = nodemailer.createTransport({
                 service: 'gmail',
+                host: 'smtp.gmail.com',
+                port: 587,
+                ignoreTLS: false,
+                secure: false,
                 auth: {
                     user: 'idealcenter.ng@gmail.com',
                     pass: 'Ideal@7480!'
