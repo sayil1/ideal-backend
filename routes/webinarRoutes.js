@@ -66,7 +66,7 @@ router.get('/allWeb', (req, res) => {
     if (err) res.send(err)
     res.send({ result: result })
     // console.log(result)
-  })
+  }).sort({ created_date : -1})
 })
 
 router.get("/del/:id", function (req, res, next) {

@@ -86,9 +86,6 @@ router.get('/allBooks/:fil', (req, res) => {
     let filter = req.params.fil
     Books.find({
       $or: [{ title: new RegExp(filter + "?", 'i', "g") }, { category: new RegExp(filter + "?", 'i', "g") },]
-
-
-
     }, (err, result) => {
       if (err) res.send(err)
       res.send({ result: result })
@@ -104,7 +101,7 @@ router.get('/allBooks/', (req, res) => {
     if (err) res.send(err)
     res.send({ result: result })
     // console.log(result)
-  })
+  }).sort({ created_date : -1})
 })
 
 router.get('/allBookscat/:cat', (req, res) => {
@@ -113,7 +110,7 @@ router.get('/allBookscat/:cat', (req, res) => {
     if (err) res.send(err)
     res.send({ result: result })
     // console.log(result)
-  })
+  }).sort({ created_date : -1})
 })
 
 
