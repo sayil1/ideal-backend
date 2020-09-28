@@ -16,9 +16,7 @@ const courseSchema = new schema({
     session:{
         type: String
     },
-    courses:{
-        type: String
-    },
+    courses:{},
 
     created_date: {
         type: Date,
@@ -29,7 +27,10 @@ const courseSchema = new schema({
         type: Date,
         default: Date.now
     }
-})
+    
+}
+,
+)
 
 const courseModel = mongoose.model("courseReg", courseSchema);
 module.exports = courseModel
