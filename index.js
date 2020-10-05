@@ -23,7 +23,7 @@ app.get('/', function (req, res) {
 app.post('/login', function (req, res) {
 	console.log(req.body)
 
-	if (req.body.email == "ideal@gmail.com" || req.body.password == "admin") {
+	if (req.body.email == "idealcenter.ng@gmail.com" || req.body.password == "ideal@7480!") {
 		res.send({
 			status: "ok",
 			message: "welcome Admin"
