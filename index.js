@@ -7,6 +7,9 @@ const port = 5000;
 
  mongoose.connect('mongodb+srv://admin:sayil2194@cluster0-ueg0l.mongodb.net/test?retryWrites=true&w=majority', {useNewUrlParser: true});
 
+
+ 
+
 // mongoose.connect("mongodb://localhost:27017/ideal");ideal
 var cors = require('cors')
 app.use(cors())

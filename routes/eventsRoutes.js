@@ -7,9 +7,9 @@ const cloudinary = require('cloudinary');
 var nodemailer = require('nodemailer');
 let HTML = require('./mailTemplates/mediaEmail')
 cloudinary.config({
-  cloud_name: 'sayil',
-  api_key: '443611676341187',
-  api_secret: 'wAPlHaXu39fxiKuBr9ZN4Gp6IxA'
+  cloud_name: 'ideal-it',
+  api_key: '725691721868417',
+  api_secret: 'YiiZShk-D18-oY_m7rVv2Fc18Wc'
 });
 
 
